@@ -1,0 +1,95 @@
+:root {
+	--green: #2ecc71;
+	--dark-green: #16a085;
+	--red: #e74c3c;
+	--dark-bg: #1a1d22;
+}
+
+body {
+	background-color: var(--dark-bg);
+	font-family: 'Courier New', Courier, monospace;
+	overscroll-behavior: none;
+}
+
+.terminal-glow {
+	text-shadow: 0 0 5px var(--green), 0 0 10px var(--green);
+}
+
+.terminal-glow-red {
+	text-shadow: 0 0 5px var(--red), 0 0 10px var(--red);
+}
+
+.scanlines::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+	background-size: 100% 4px;
+	animation: scan 10s linear infinite;
+	pointer-events: none;
+}
+
+@keyframes scan {
+	from { background-position: 0 0; }
+	to { background-position: 0 -400px; }
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes type {
+	from { width: 0; }
+	to { width: 100%; }
+}
+
+.animate-fadeIn {
+	animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-type {
+	overflow: hidden;
+	white-space: nowrap;
+	animation: type 2s steps(40, end);
+}
+
+.location-btn:active {
+	transform: scale(0.95);
+	box-shadow: 0 0 15px var(--dark-green);
+}
+
+.minigame-btn:active {
+	transform: scale(0.95);
+}
+
+.popup {
+	transition: opacity 0.3s, transform 0.3s;
+}
+
+@keyframes shake {
+	10%,
+	90% {
+		transform: translate3d(-1px, 0, 0);
+	}
+	20%,
+	80% {
+		transform: translate3d(2px, 0, 0);
+	}
+	30%,
+	50%,
+	70% {
+		transform: translate3d(-4px, 0, 0);
+	}
+	40%,
+	60% {
+		transform: translate3d(4px, 0, 0);
+	}
+}
+
+.animate-shake {
+	animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
