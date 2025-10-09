@@ -15,7 +15,7 @@
 <body class="relative overflow-hidden flex items-center justify-center min-h-screen">
 
     <!-- The app container now has a fixed size to simulate a phone screen -->
-    <div id="app" class="w-full max-w-sm h-[800px] bg-black relative border-2 border-gray-800 rounded-lg overflow-hidden scanlines"></div>
+    <div id="app" class="w-full max-w-sm h-[800px] bg-black relative overflow-hidden scanlines"></div>
 
     <!-- Loading Screen Section -->
     <template id="boot-screen-template">
@@ -43,7 +43,7 @@
 
     <!-- Connecting Screen Section -->
     <template id="connecting-screen-template">
-        <div class="flex flex-col items-center justify-center p-8">
+        <div class="flex flex-col items-center justify-center h-full p-8">
             <div class="text-center w-full max-w-lg fade-in">
                 <h1 class="text-3xl font-bold text-glow mb-4">AUTHENTICATING...</h1>
                 <p id="connecting-text" class="text-xl text-gray-300"></p>
