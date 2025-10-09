@@ -1,7 +1,50 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
 
+const firebaseConfig = {
+	apiKey: "YOUR_API_KEY",
+	authDomain: "YOUR_AUTH_DOMAIN",
+	databaseURL: "YOUR_DATABASE_URL",
+	projectId: "YOUR_PROJECT_ID",
+	storageBucket: "YOUR_STORAGE_BUCKET",
+	messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+	appId: "YOUR_APP_ID"
+};
 
+//const firebaseApp = initializeApp(firebaseConfig);
+//const database = getDatabase(firebaseApp);
+
+//
+function publish(eventName, data) 
+{
+	console.log(`Publishing to ${eventName}: `, data);
+	const topicRef = ref(database, `events/${eventName}`);
+	set(topicRef, { 
+		...data, 
+		timestamp: new Date().getTime() }).catch(err => {
+		console.error("Error publishing to Firebase:", err);
+	});
+}
+
+function subscribe(eventName, callback) 
+{
+	console.log(`Subscribing to ${eventName}`);
+	const topicRef = ref(database, `events/${eventName}`);
+
+	const listener = snapshot => {
+		if (snapshot.exists())
+		{
+			callback(snapshot.val());
+		}
+	};
+
+	onValue(topicRef, listener);
+
+	return () => {
+		console.log(`Unsubscribing from ${eventName}`);
+		off(topicRef, 'value', listener);
+	};
+}
 
 // --- GLOBAL STATE ---
 let gameState = {
