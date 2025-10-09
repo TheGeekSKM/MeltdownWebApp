@@ -1,9 +1,15 @@
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
+
+
+
 // --- GLOBAL STATE ---
 let gameState = {
 	currentScreen: 'BOOT',
 	player: { id: 'player_123', action: null },
 	minigame: { type: null, prompt: '', solution: null },
 };
+
 
 // --- STATE MANAGEMENT ---
 let subscribers = [];
