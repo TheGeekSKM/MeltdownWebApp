@@ -1,65 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<title>Reactor Control</title>
-		<script src="https://cdn.tailwindcss.com"></script>
-		<link rel="stylesheet" href="src/style.css" />
-	</head>
-	
-  <body class="relative overflow-hidden">
-		<div id="app" class="h-screen w-screen scanlines"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>NUCLEAR OS</title>
+    <!-- Tailwind CSS for rapid styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Ubuntu Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/screenSelect.css" />
+</head>
+<body class="relative overflow-hidden flex items-center justify-center min-h-screen">
 
-		<template id="boot-screen-template">
-			<div class="flex flex-col items-center justify-center h-full w-full bg-black text-[var(--green)] p-4">
-				<pre class="text-xl md:text-3xl terminal-glow mb-8 animate-fadeIn">R.C.S. HYPERION</pre>
-				<div class="w-full max-w-md">
-					<p id="boot-text" class="text-center animate-type"></p>
-					<div class="w-full bg-gray-700 h-1 mt-2 rounded-full overflow-hidden"><div id="boot-progress" class="bg-[var(--green)] h-1 rounded-full" style="width: 0%; transition: width 4s linear;"></div></div>
-				</div>
-			</div>
-		</template>
-		<template id="main-screen-template">
-			<main class="flex flex-col h-full p-6 text-[var(--green)] animate-fadeIn">
-				<header class="border-b-2 border-[var(--green)] pb-4 text-center">
-					<h1 id="player-action" class="text-2xl font-bold terminal-glow"></h1>
-					<p id="player-role-desc" class="text-sm opacity-80 mt-2"></p>
-				</header>
-				<div class="flex-grow mt-6">
-					<h2 class="text-lg mb-4 text-center">Select Target Location:</h2>
-					<div id="location-buttons" class="grid grid-cols-2 gap-4"></div>
-				</div>
-			</main>
-		</template>
-		<template id="minigame-password-template">
-			<div class="flex flex-col h-full p-6 text-[var(--green)] animate-fadeIn">
-				<div class="relative flex-grow flex flex-col items-center justify-center bg-black/50 border-2 border-[var(--green)] rounded-lg p-4">
-					<div id="minigame-timer" class="absolute top-2 right-2 text-2xl font-bold terminal-glow-red">10</div>
-					<h2 id="minigame-prompt" class="text-xl text-center mb-6"></h2>
-					<input id="password-input" type="text" class="w-full max-w-xs bg-transparent border-b-2 border-[var(--green)] text-center text-3xl p-2 text-[var(--green)] focus:outline-none focus:border-[var(--dark-green)]" autocomplete="off" />
-					<button id="submit-minigame" class="mt-8 bg-[var(--green)] text-black font-bold py-3 px-12 rounded-lg text-xl location-btn">SUBMIT</button>
-				</div>
-			</div>
-		</template>
-		<template id="minigame-sequence-template">
-			<div class="flex flex-col h-full p-6 text-[var(--green)] animate-fadeIn">
-				<div class="relative flex-grow flex flex-col items-center justify-center bg-black/50 border-2 border-[var(--green)] rounded-lg p-4">
-					<div id="minigame-timer" class="absolute top-2 right-2 text-2xl font-bold terminal-glow-red">15</div>
-					<h2 id="minigame-prompt" class="text-xl text-center mb-6"></h2>
-					<div id="sequence-display" class="w-full max-w-xs h-16 bg-black/50 border border-gray-600 rounded mb-6 flex items-center justify-center text-3xl space-x-2"></div>
-					<div id="sequence-buttons" class="grid grid-cols-3 gap-4 w-full max-w-xs"></div>
-					<button id="submit-minigame" class="mt-8 bg-[var(--green)] text-black font-bold py-3 px-12 rounded-lg text-xl location-btn">SUBMIT</button>
-				</div>
-			</div>
-		</template>
-		<template id="solution-popup-template">
-			<div class="fixed top-4 right-4 z-50 w-11/12 max-w-sm bg-blue-900 border-2 border-blue-400 text-white rounded-lg shadow-lg p-4 opacity-0 transform translate-y-[-20px] popup">
-				<button id="popup-close-btn" class="absolute top-1 right-2 text-2xl">&times;</button>
-				<h3 class="font-bold text-lg mb-2 text-blue-300">[Incoming Transmission]</h3>
-				<p id="solution-text" class="text-base"></p>
-			</div>
-		</template>
-		<script type="module" src="src/main.js"></script>
-	</body>
+    <!-- The app container now has a fixed size to simulate a phone screen -->
+    <div id="app" class="w-full max-w-sm h-[800px] bg-black relative border-2 border-gray-800 rounded-lg overflow-hidden scanlines"></div>
+
+    <!-- Loading Screen Section -->
+    <template id="boot-screen-template">
+        <div class="flex flex-col items-center justify-center h-full w-full bg-black text-white p-4">
+            <svg class="w-24 h-24 mb-6 text-glow text-[var(--green)] animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <h1 class="text-2xl text-[var(--green)] type-effect">CONNECTING...</h1>
+            <p class="mt-4 text-sm text-gray-400">Establishing Nexus with HYPERION OS</p>
+        </div>
+    </template>
+
+    <!-- Role Selection Menu Section -->
+    <template id="menu-screen-template">
+        <div class="flex flex-col items-center justify-center h-full p-8">
+            <div class="text-center w-full max-w-lg fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold text-glow mb-4">SELECT OPERATOR ROLE</h1>
+                <p class="text-lg text-gray-300 mb-12">Your assigned directive will determine your interface.</p>
+                <div id="role-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Role buttons will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Connecting Screen Section -->
+    <template id="connecting-screen-template">
+        <div class="flex flex-col items-center justify-center h-full p-8">
+            <div class="text-center w-full max-w-lg fade-in">
+                <h1 class="text-3xl font-bold text-glow mb-4">AUTHENTICATING...</h1>
+                <p id="connecting-text" class="text-xl text-gray-300"></p>
+            </div>
+        </div>
+    </template>
+
+    <script type="module" src="src/screenSelect.js"></script>
+</body>
 </html>
+

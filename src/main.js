@@ -31,7 +31,7 @@ function subscribe(eventName, callback)
 	console.log(`Subscribing to ${eventName}`);
 	const topicRef = ref(database, `events/${eventName}`);
 
-	const listener = snapshot => {
+	const listener = (snapshot) => {
 		if (snapshot.exists())
 		{
 			callback(snapshot.val());
