@@ -1,12 +1,14 @@
- document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const appContainer = document.getElementById('app');
     let currentScreen = 'loading'; // loading, menu, connecting
 
+    // TODO: Connect to Firebase and check to see which roles are taken. Remove taken roles from the roles array.
+
     const roles = [
-        { id: 'engineer', name: 'Engineer', color: 'yellow-400' },
+        { id: 'electrician', name: 'Electrician', color: 'yellow-400' },
         { id: 'scientist', name: 'Scientist', color: 'blue-400' },
-        { id: 'operator', name: 'Operator', color: 'red-400' },
-        { id: 'medic', name: 'Medic', color: 'green-400' }
+        { id: 'comms', name: 'Comms', color: 'red-400' },
+        { id: 'engineer', name: 'Engineer', color: 'green-400' }
     ];
 
     // --- Main Render Function ---
@@ -35,7 +37,7 @@
         const roleButtonsContainer = document.getElementById('role-buttons');
         roles.forEach(role => {
             const button = document.createElement('button');
-            button.className = `role-button w-full p-6 text-2xl font-bold border-2 border-${role.color} text-${role.color} rounded-lg bg-black/30`;
+            button.className = `role-button w-full p-4 text-xl font-bold border-2 border-${role.color} text-${role.color} rounded-lg bg-black/30`;
             button.textContent = role.name.toUpperCase();
             button.addEventListener('click', () => selectRole(role));
             roleButtonsContainer.appendChild(button);
@@ -61,7 +63,7 @@
         setTimeout(() => {
             currentScreen = 'menu';
             render();
-        }, 3000); // 3-second loading time
+        }, 2500); // 2.5-second loading time
     }
 
     // --- Start the Application ---

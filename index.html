@@ -12,14 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="src/screenSelect.css" />
 </head>
-<body class="relative overflow-hidden flex items-center justify-center min-h-screen">
+<body class="relative overflow-hidden">
 
-    <!-- The app container now has a fixed size to simulate a phone screen -->
-    <div id="app" class="w-full max-w-sm h-[800px] bg-black relative overflow-hidden scanlines"></div>
+    <!-- THE FIX: The app container now fills the entire screen -->
+    <div id="app" class="h-screen w-screen bg-black relative overflow-hidden scanlines"></div>
 
     <!-- Loading Screen Section -->
     <template id="boot-screen-template">
-        <div class="flex flex-col items-center justify-center w-full bg-black text-white p-4">
+        <div class="flex flex-col items-center justify-center h-full w-full bg-black text-white p-4">
             <svg class="w-24 h-24 mb-6 text-glow text-[var(--green)] animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
@@ -30,13 +30,22 @@
 
     <!-- Role Selection Menu Section -->
     <template id="menu-screen-template">
-        <div class="flex flex-col items-center justify-center p-8">
-            <div class="text-center w-full max-w-lg fade-in">
-                <h1 class="text-4xl md:text-5xl font-bold text-glow mb-4">SELECT OPERATOR ROLE</h1>
-                <p class="text-lg text-gray-300 mb-12">Your assigned directive will determine your interface.</p>
-                <div id="role-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <!-- Role buttons will be inserted here by JavaScript -->
-                </div>
+        <div class="flex flex-col items-center justify-center h-full p-4 md:p-6 gap-4 fade-in">
+            <!-- Section 1: Header -->
+            <div class="menu-section text-center max-w-lg">
+                <h1 class="text-3xl md:text-4xl font-bold text-glow">SELECT OPERATOR ROLE</h1>
+                <p class="text-md text-gray-300 mt-2">Your directive determines your interface.</p>
+            </div>
+            
+            <!-- Section 2: Role Buttons -->
+            <div id="role-buttons" class="menu-section grid grid-cols-2 gap-4 max-w-lg">
+                <!-- Role buttons will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Section 3: Detailed Info -->
+            <div class="menu-section max-w-lg">
+                <h2 class="font-bold text-glow mb-2 text-center">SYSTEM STATUS</h2>
+                <p class="text-sm text-gray-400">All systems nominal. Reactor core stability at 99.8%. Connect your interface to receive live operational data.</p>
             </div>
         </div>
     </template>

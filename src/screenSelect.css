@@ -1,4 +1,3 @@
-/* Define custom theme variables */
 :root {
     --green: #4ade80;
     --dark-green: #22c55e;
@@ -40,12 +39,12 @@ body {
     overflow: hidden;
     white-space: nowrap;
     border-right: 2px solid var(--green);
-    animation: typing 2s steps(16, end), blink-caret .75s step-end infinite;
+    animation: typing 2s steps(20, end), blink-caret .75s step-end infinite;
 }
 
 @keyframes typing {
     from { width: 0 }
-    to { width: 100% }
+    to { width: 50% }
 }
 
 @keyframes blink-caret {
@@ -75,4 +74,13 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+/* Style for the menu sections */
+.menu-section {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgb(74 222 128 / 0.2);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    width: 100%;
 }
