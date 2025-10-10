@@ -14,8 +14,6 @@ function InitChooseScreen(roles)
     const roleButtonsContainer = document.getElementById('role-buttons');
     if (!roleButtonsContainer) return;
 
-    
-
     roleButtonsContainer.innerHTML = '';
     allRoles.forEach(role => {
         const button = document.createElement('button');
@@ -39,17 +37,22 @@ function SelectRole(roleObject)
 
 	SendActionToFirebase('claim_role', {
 		roleID: roleObject.id
-		// TODO: remove role name, color, etc. from Firebase data structure when role is claimed...
 	});
+	
+	// we optimistically update the availableRoles in Firebase to remove the selected role
+	// i say "optimistically" because ideally the server would confirm this change but we go fucking ham here for simplicity
+	let newAvailableRoles = GetCurrentState().availableRoles.filter(role => role.id !== roleObject.id);
+	Publish('availableRoles', newAvailableRoles.map(role => role.id));
 
-	// we update the local state to move onto the connecting screen and update the player's role in the local state
+	// Update local state: set screen to 'connecting', assign player role, and update available roles object array.
 	UpdateState(oldState => ({
 		...oldState, 
 		currentScreen: MENUS.CONNECTING,
 		player: { 
 			...oldState.player, 
 			role: roleObject 
-		}
+		},
+		availableRoles: newAvailableRoles
 	}));
 
 	// force re-render for the connecting screen
@@ -173,7 +176,7 @@ function FakeServerUpdates()
 // that way the Render function will run and it'll check for the Choose screen...
 const boundRender = (oldState, newState) => {
 	Render(oldState, newState);
-	if (newState.currentScreen === MENUS.CHOOSE) InitChooseScreen(newState.availableRoles);
+	if (newState.currentScreen === MENUS.CHOOSE) InitChooseScreen(newState.availableRoles.map(role => role.id));
 };
 
 function StartUIUpdateLoop(delayTime = 3)
@@ -182,14 +185,16 @@ function StartUIUpdateLoop(delayTime = 3)
 		if (latestRoleData)
 		{
 			//TODO: Implement UI Updates and Logic Updates based on events that the Server/Database has called
+			//TODO: Figure out what data needs to be updated for each role...
 		}
 	}, delayTime * 1000);
 }
+
+
 
 SubscribeToStateChange(boundRender);
 StartLoadingSequence();
 
 FakeServerUpdates();
 
-// the app won't start without this function...
 // InitializeFirebaseListeners();

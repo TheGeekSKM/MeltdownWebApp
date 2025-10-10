@@ -66,7 +66,7 @@ let gameState = {
         id: `PLAYER-${Math.random().toString(36).substring(2, 9).toUpperCase()}`, // random ID for demo purposes
         role: null // { id, name, color } ex: { id: 'engineer', name: 'Engineer', color: 'green-400' }
     },
-    availableRoles: []
+    availableRoles: [] // array of role objects { id, name, color } ex: { id: 'engineer', name: 'Engineer', color: 'green-400' }
 };
 
 export function GetCurrentState() 
