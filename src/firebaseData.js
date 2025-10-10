@@ -58,11 +58,13 @@ export function Subscribe(eventName, callback)
 	};
 }
 
+
+// IMPORTANT NOTE: Bear in mind that the role.id values must match the MENUS constants for this to work seamlessly
 let gameState = {
-    currentScreen: 'loading', // loading, choose, connecting, engineer, electrician, scientist, comms
+    currentScreen: MENUS.LOADING, // loading, choose, connecting, engineer, electrician, scientist, comms
     player: { 
-        id: `PLAYER-${Math.random().toString(36).substring(2, 9).toUpperCase()}`, 
-        role: null 
+        id: `PLAYER-${Math.random().toString(36).substring(2, 9).toUpperCase()}`, // random ID for demo purposes
+        role: null // { id, name, color } ex: { id: 'engineer', name: 'Engineer', color: 'green-400' }
     },
     availableRoles: []
 };

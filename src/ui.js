@@ -6,12 +6,12 @@ const appContainer = document.getElementById('app');
 export function Render(oldState, newState)
 {
     const shouldScreenChange = oldState?.currentScreen !== newState.currentScreen ||
-                                oldState?.player.role !== newState.player.role;
+                                oldState?.player.role.id !== newState.player.role.id;
     
-    if (shouldScreenChange) RenderScreen(newState.currentScreen, newState.player.role);
+    if (shouldScreenChange) RenderScreen(newState.currentScreen, newState.player.role.id);
 }
 
-function RenderScreen(screen, role)
+function RenderScreen(screen)
 {
     let templateID;
 

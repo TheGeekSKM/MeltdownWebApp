@@ -1,17 +1,20 @@
 import { database, Subscribe, UpdateState, MENUS, GetCurrentState, Publish, Subscribe, SubscribeToStateChange } from './firebaseData.js';
 import { Render } from './ui.js';
 
+let latestRoleData = null;
+const allRoles = [
+	{ id: 'electrician', name: 'Electrician', color: 'yellow-400' },
+	{ id: 'scientist', name: 'Scientist', color: 'blue-400' },
+	{ id: 'comms', name: 'Comms', color: 'red-400' },
+	{ id: 'engineer', name: 'Engineer', color: 'green-400' }
+];
+
 function InitChooseScreen(roles) 
 {
     const roleButtonsContainer = document.getElementById('role-buttons');
     if (!roleButtonsContainer) return;
 
-    const allRoles = [
-        { id: 'electrician', name: 'Electrician', color: 'yellow-400' },
-        { id: 'scientist', name: 'Scientist', color: 'blue-400' },
-        { id: 'comms', name: 'Comms', color: 'red-400' },
-        { id: 'engineer', name: 'Engineer', color: 'green-400' }
-    ];
+    
 
     roleButtonsContainer.innerHTML = '';
     allRoles.forEach(role => {
@@ -30,26 +33,39 @@ function InitChooseScreen(roles)
     });
 }
 
-function SelectRole(role)
+function SelectRole(roleObject)
 {
-	console.log(`Selected Role: ${role.name}`);
+	console.log(`Selected Role: ${roleObject.name}`);
 
 	SendActionToFirebase('claim_role', {
-		roleID: role.id
+		roleID: roleObject.id
 		// TODO: remove role name, color, etc. from Firebase data structure when role is claimed...
 	});
 
+	// we update the local state to move onto the connecting screen and update the player's role in the local state
 	UpdateState(oldState => ({
 		...oldState, 
-		currentScreen: MENUS.CONNECTING
+		currentScreen: MENUS.CONNECTING,
+		player: { 
+			...oldState.player, 
+			role: roleObject 
+		}
 	}));
 
 	// force re-render for the connecting screen
 	Render(null, { currentScreen: MENUS.CONNECTING });
 
 	const connectingText = document.getElementById('connecting-text');
-	if (connectingText) connectingText.textContent = `Initializing interface for: ${role.name.toUpperCase()}`;
+	if (connectingText) connectingText.textContent = `Initializing interface for: ${roleObject.name.toUpperCase()}`;
 
+	StartUIUpdateLoop(3);
+
+	setTimeout(() => {
+		UpdateState(oldState => ({
+			...oldState,
+			currentScreen: roleObject.id // move to the role-specific screen, works cuz the roleIDs match the MENUS constants
+		}));
+	}, 1500); // 1.5-second fake connecting time
 }
 
 function SendActionToFirebase(action, data) 
@@ -57,7 +73,7 @@ function SendActionToFirebase(action, data)
 	console.log(`Sending action to Firebase: ${action}`, data);
 	const playerID = GetCurrentState().player.id;
 	
-	Publish(`client_actions/${data.roleID || GetCurrentState().player.role || 'unknown'}`, {
+	Publish(`client_actions/${data.roleID || GetCurrentState().player.role.id || 'unknown'}`, {
 		...data,
 		action,
 		playerID,
@@ -99,6 +115,11 @@ function InitializeFirebaseListeners()
 	/* Example data structure that would need to pre-exist in Firebase:
 	availableRoles: ['engineer', 'scientist', 'comms'],
 	*/
+
+	Subscribe(`server_events/${GetCurrentState().player.role}`, (data) => {
+		latestRoleData = data;
+	})
+
 }
 
 function StartLoadingSequence()
@@ -154,6 +175,16 @@ const boundRender = (oldState, newState) => {
 	Render(oldState, newState);
 	if (newState.currentScreen === MENUS.CHOOSE) InitChooseScreen(newState.availableRoles);
 };
+
+function StartUIUpdateLoop(delayTime = 3)
+{
+	setInterval(() => {
+		if (latestRoleData)
+		{
+			//TODO: Implement UI Updates and Logic Updates based on events that the Server/Database has called
+		}
+	}, delayTime * 1000);
+}
 
 SubscribeToStateChange(boundRender);
 StartLoadingSequence();
