@@ -1,4 +1,4 @@
-import { database, Subscribe, UpdateState, MENUS, GetCurrentState, Publish, Subscribe, SubscribeToStateChange } from './firebaseData.js';
+import { Subscribe, UpdateState, MENUS, GetCurrentState, Publish, SubscribeToStateChange } from './firebaseData.js';
 import { Render } from './ui.js';
 
 let latestRoleData = null;

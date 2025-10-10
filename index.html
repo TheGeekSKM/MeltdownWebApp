@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>NUCLEAR OS</title>
-    <!-- Tailwind CSS for rapid styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for Ubuntu Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,11 +13,12 @@
 <body class="relative overflow-hidden">
 
     <!-- THE FIX: The app container now fills the entire screen -->
-    <div id="app" class="h-screen w-screen bg-black relative overflow-hidden scanlines"></div>
+    <div id="app" class="relative w-screen h-screen overflow-hidden bg-black scanlines"></div>
 
     <!-- Loading Screen Section -->
     <template id="boot-screen-template">
-        <div class="flex flex-col items-center justify-center h-full w-full bg-black text-white p-4">
+        <div class="flex flex-col items-center justify-center w-full h-full p-4 text-white bg-black">
+            <!-- TODO: Make the SVG Smaller...it's too big and takes up the whole damn screen-->
             <svg class="w-24 h-24 mb-6 text-glow text-[var(--green)] animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
@@ -30,21 +29,21 @@
 
     <!-- Role Selection Menu Section -->
     <template id="choose-screen-template">
-        <div class="flex flex-col items-center justify-center h-full p-4 md:p-6 gap-4 fade-in">
+        <div class="flex flex-col items-center justify-center h-full gap-4 p-4 md:p-6 fade-in">
             <!-- Section 1: Header -->
-            <div class="menu-section text-center max-w-lg">
-                <h1 class="text-3xl md:text-4xl font-bold text-glow">SELECT OPERATOR ROLE</h1>
-                <p class="text-md text-gray-300 mt-2">Your directive determines your interface.</p>
+            <div class="max-w-lg text-center menu-section">
+                <h1 class="text-3xl font-bold md:text-4xl text-glow">SELECT OPERATOR ROLE</h1>
+                <p class="mt-2 text-gray-300 text-md">Your directive determines your interface.</p>
             </div>
             
             <!-- Section 2: Role Buttons -->
-            <div id="role-buttons" class="menu-section grid grid-cols-2 gap-4 max-w-lg">
+            <div id="role-buttons" class="grid max-w-lg grid-cols-2 gap-4 menu-section">
                 <!-- Role buttons will be inserted here by JavaScript -->
             </div>
 
             <!-- Section 3: Detailed Info -->
-            <div class="menu-section max-w-lg">
-                <h2 class="font-bold text-glow mb-2 text-center">SYSTEM STATUS</h2>
+            <div class="max-w-lg menu-section">
+                <h2 class="mb-2 font-bold text-center text-glow">SYSTEM STATUS</h2>
                 <p class="text-sm text-gray-400">All systems nominal. Reactor core stability at 99.8%. Connect your interface to receive live operational data.</p>
             </div>
         </div>
@@ -53,8 +52,8 @@
     <!-- Connecting Screen Section -->
     <template id="connecting-screen-template">
         <div class="flex flex-col items-center justify-center h-full p-8">
-            <div class="text-center w-full max-w-lg fade-in">
-                <h1 class="text-3xl font-bold text-glow mb-4">AUTHENTICATING...</h1>
+            <div class="w-full max-w-lg text-center fade-in">
+                <h1 class="mb-4 text-3xl font-bold text-glow">AUTHENTICATING...</h1>
                 <p id="connecting-text" class="text-xl text-gray-300"></p>
             </div>
         </div>
