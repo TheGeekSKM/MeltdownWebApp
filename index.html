@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/screenSelect.css" />
+    <link rel="stylesheet" href="styles/screenSelect.css" />
 </head>
 <body class="relative overflow-hidden">
 
@@ -29,7 +29,7 @@
     </template>
 
     <!-- Role Selection Menu Section -->
-    <template id="menu-screen-template">
+    <template id="choose-screen-template">
         <div class="flex flex-col items-center justify-center h-full p-4 md:p-6 gap-4 fade-in">
             <!-- Section 1: Header -->
             <div class="menu-section text-center max-w-lg">
@@ -60,7 +60,10 @@
         </div>
     </template>
 
-    <script type="module" src="src/screenSelect.js"></script>
+    <script type="module" src="src/firebaseData.js"></script>
+    <script type="module" src="src/ui.js"></script>
+    
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
 

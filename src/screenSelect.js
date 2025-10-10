@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const appContainer = document.getElementById('app');
-    let currentScreen = 'loading'; // loading, menu, connecting
+    let currentScreen = 'loading'; // loading, choose, connecting
 
     // TODO: Connect to Firebase and check to see which roles are taken. Remove taken roles from the roles array.
 
@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let templateId;
         if (currentScreen === 'loading') {
             templateId = 'boot-screen-template';
-        } else if (currentScreen === 'menu') {
-            templateId = 'menu-screen-template';
+        } else if (currentScreen === 'choose') {
+            templateId = 'choose-screen-template';
         } else if (currentScreen === 'connecting') {
             templateId = 'connecting-screen-template';
         }
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         appContainer.appendChild(template.content.cloneNode(true));
 
         // Run screen-specific logic after rendering
-        if (currentScreen === 'menu') {
+        if (currentScreen === 'choose') {
             initMenuScreen();
         }
     }
